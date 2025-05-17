@@ -1,82 +1,89 @@
 
 let cells=[];
-let bias=[1,0,0,0,0,0,0,0,0];
 let w=1;
 
-function setup(){
-    frameRate(35);
-    createCanvas(200,200);
-    let total= width/w;
-    //setting up 2d
-    for (let i=0;i<total;i++){
-        cells[i]=[];
-        for(let j = 0;j<total;j++){
-            cells[i][j]=[]
-            cells[i][j][0]=bias[floor(random(4))];
-            if(cells[i][j][0]==1){
-                cells[i][j][1]=100;
-            }
-            else{
-                cells[i][j][1]=0;
-            }
+let initial_positions=[]
+
+async function PassToBits(password) {
+    const encoder = new TextEncoder();          // Converts string to byte array
+    const data = encoder.encode(password);      // UTF-8 encode password
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data); // 256-bit hash
+    const hashArray = Array.from(new Uint8Array(hashBuffer));       // Turn buffer into array of bytes
+
+    // Convert bytes into bits
+    const bits = [];
+    for (let byte of hashArray) {
+        for (let i = 7; i >= 0; i--) {
+            bits.push((byte >> i) & 1);         // Extract bits one by one
         }
     }
+
+    return bits; // You now have 256 bits like [1,0,1,1,0,...]
 }
 
 
-function draw(){
-    let len=cells[0].length; 
-    let total= width/w;
-    //basically filling it with randomness to start
-    for(let i =0; i<total; i++){
-        
-        for (let j=0; j<len;j++){
-            noStroke();
-            //uncomment for flipped scheme
-            fill(/*255-*/cells[i][j][0]*255);
-            square(i*w,j*w,w);
+function initializeGrid(gridSize, keyBits) {
+    const cells = [];
+    let idx = 0;
+
+    for (let i = 0; i < gridSize; i++) {
+        cells[i] = [];
+        for (let j = 0; j < gridSize; j++) {
+            const bit = keyBits[idx % keyBits.length];  // Reuse bits if needed
+            const age = bit === 1 ? 100 : 0;            // Set age based on state
+            cells[i][j] = [bit, age];
+            idx++;
         }
     }
 
-    
-    //determining current cell values and next cells
-    let nextCells=[];
-    for(let i=0;i<len;i++){
-        nextCells[i]=[];
-        for(let j=0;j<len;j++){
-            //getting values for state
-            let upLeft = cells[(i - 1 + total) % total][(j - 1 + total) % total][0];
-            let upMid = cells[i][(j - 1 + total) % total][0];
-            let upRight = cells[(i + 1) % total][(j - 1 + total) % total][0];
-            let left = cells[(i - 1 + total) % total][j][0];
-            let current = cells[i][j][0];
-            let right = cells[(i + 1) % total][j][0];
-            let botLeft = cells[(i - 1 + total) % total][(j + 1) % total][0];
-            let botMid = cells[i][(j + 1) % total][0];
-            let botRight = cells[(i + 1) % total][(j + 1) % total][0];
+    return cells;
+}
 
 
-            //getting values for age
-            let age = cells[i][j][1];
-            let upLeftAge = cells[(i - 1 + total) % total][(j - 1 + total) % total][1];
-            let upMidAge = cells[i][(j - 1 + total) % total][1];
-            let upRightAge = cells[(i + 1) % total][(j - 1 + total) % total][1];
-            let leftAge = cells[(i - 1 + total) % total][j][1];
-            let rightAge = cells[(i + 1) % total][j][1];
-            let botLeftAge = cells[(i - 1 + total) % total][(j + 1) % total][1];
-            let botMidAge = cells[i][(j + 1) % total][1];
-            let botRightAge = cells[(i + 1) % total][(j + 1) % total][1];
-            //funciton to change state
-            let [nextState,nextAge]=changeState(upLeft,upMid,upRight,left,current,right,botLeft,botMid,botRight,age,upLeftAge,upMidAge,upRightAge,leftAge,rightAge,botLeftAge,botMidAge,botRightAge);
+function evoStep(cells){
+        const total = cells.length;
+        const len =cells[0].length;
+        const outputBits=[];
 
 
+        //determining current cell values and next cells
+        let nextCells=[];
+        for(let i=0;i<len;i++){
+            nextCells[i]=[];
+            for(let j=0;j<len;j++){
+                //getting values for state
+                let upLeft = cells[(i - 1 + total) % total][(j - 1 + total) % total][0];
+                let upMid = cells[i][(j - 1 + total) % total][0];
+                let upRight = cells[(i + 1) % total][(j - 1 + total) % total][0];
+                let left = cells[(i - 1 + total) % total][j][0];
+                let current = cells[i][j][0];
+                let right = cells[(i + 1) % total][j][0];
+                let botLeft = cells[(i - 1 + total) % total][(j + 1) % total][0];
+                let botMid = cells[i][(j + 1) % total][0];
+                let botRight = cells[(i + 1) % total][(j + 1) % total][0];
 
-            nextCells[i][j] = [nextState,nextAge];
 
+                //getting values for age
+                let age = cells[i][j][1];
+                let upLeftAge = cells[(i - 1 + total) % total][(j - 1 + total) % total][1];
+                let upMidAge = cells[i][(j - 1 + total) % total][1];
+                let upRightAge = cells[(i + 1) % total][(j - 1 + total) % total][1];
+                let leftAge = cells[(i - 1 + total) % total][j][1];
+                let rightAge = cells[(i + 1) % total][j][1];
+                let botLeftAge = cells[(i - 1 + total) % total][(j + 1) % total][1];
+                let botMidAge = cells[i][(j + 1) % total][1];
+                let botRightAge = cells[(i + 1) % total][(j + 1) % total][1];
+
+
+                //funciton to change state
+                let [nextState,nextAge]=changeState(upLeft,upMid,upRight,left,current,right,botLeft,botMid,botRight,age,upLeftAge,upMidAge,upRightAge,leftAge,rightAge,botLeftAge,botMidAge,botRightAge);
+                nextCells[i][j] = [nextState,nextAge];
+                outputBits.push(nextState);
+
+            }
         }
-    }
-    cells=nextCells;
-
+        return [nextCells,outputBits];
 
 }
 
@@ -153,3 +160,34 @@ function changeState(upLeft,upMid,upRight,left,current,right,botLeft,botMid,botR
     else return [0,0]
     
 }
+
+async function generateKeystream(password, gridSize, steps, byteLength) {
+    const bits = await PassToBits(password);
+    let cells = initializeGrid(gridSize, bits);
+
+    let allBits = [];
+
+    for (let i = 0; i < steps; i++) {
+        const [nextCells, outputBits] = evoStep(cells);
+        cells = nextCells;
+        allBits.push(...outputBits);
+    }
+
+    // Convert bits into bytes
+    const keystream = new Uint8Array(byteLength);
+    for (let i = 0; i < byteLength; i++) {
+        let byte = 0;
+        for (let b = 0; b < 8; b++) {
+            const bit = allBits[i * 8 + b] || 0;
+            byte |= (bit << (7 - b));
+        }
+        keystream[i] = byte;
+    }
+
+    return keystream;
+}
+
+
+generateKeystream("hello123", 16, 5, 64).then(stream => {
+    console.log("Keystream:", stream);
+});

@@ -1,3 +1,5 @@
 The plan is to take the cellular automata program i designed before and adapt it to encrypt and decrypt data which i will do by creating 
 a key based on the progression and placemet of initial random pixels, with the program being run in either reverse or forward with the 
 result being used for decryption purposes.
+
+the key is an input pssword, grid size, and number of steps while the resulting keystring of that formation is xor with the bits in a file to encrypt it.
