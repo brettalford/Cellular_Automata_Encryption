@@ -1,0 +1,21 @@
+<body>
+  <h2>Cellular Automaton File Encryption</h2>
+  <input type="file" id="fileInput"><br><br>
+  <label for="fileType">File Type (e.g., txt, mp4, png):</label>
+  <input type="text" id="fileType" placeholder=".txt"><br><br>
+
+  <label for="password">Enter your password:</label>
+  <input type="password" id="password" placeholder="Password"><br><br>
+
+  <label>Grid Size: <input type="number" id="gridSize" value="16" min="4" max="128"></label><br><br>
+  <label>Steps: <input type="number" id="steps" value="5" min="1" max="100"></label><br><br>
+
+  <button onclick="encrypt()">Encrypt</button>
+  <button onclick="decrypt()">Decrypt</button>
+  <br><br>
+  <a id="downloadLink" style="display:none">Download Result</a>
+  <p id="keySummary" style="margin-top: 1em;"></p>
+
+
+  <script src="base.js"></script>
+</body>

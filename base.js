@@ -1,8 +1,11 @@
+async function hashToHex(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
-let cells=[];
-let w=1;
-
-let initial_positions=[]
 
 async function PassToBits(password) {
     const encoder = new TextEncoder();          // Converts string to byte array
@@ -188,6 +191,82 @@ async function generateKeystream(password, gridSize, steps, byteLength) {
 }
 
 
-generateKeystream("hello123", 16, 5, 64).then(stream => {
-    console.log("Keystream:", stream);
-});
+
+
+
+async function encrypt() {
+    const fileType = document.getElementById("fileType").value.trim() || "bin";
+    const gridSize = parseInt(document.getElementById("gridSize").value);
+    const steps = parseInt(document.getElementById("steps").value);
+    const file = document.getElementById('fileInput').files[0];
+    const password = document.getElementById('password').value;
+
+    if (!file || !password) {
+        alert("Please select a file and enter a password.");
+        return;
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const inputBytes = new Uint8Array(arrayBuffer);
+
+    const keystream = await generateKeystream(password, gridSize, steps, inputBytes.length);
+
+    const encrypted = new Uint8Array(inputBytes.length);
+    for (let i = 0; i < inputBytes.length; i++) {
+        encrypted[i] = inputBytes[i] ^ keystream[i];
+    }
+
+    downloadFile(encrypted, `encrypted.${fileType}`);
+
+    //summary for key
+    const summary = `Key Summary:<br>
+        Password = ${password}<br>
+        Grid Size = ${gridSize}<br>
+        Steps = ${steps}`;
+    
+    document.getElementById("keySummary").innerHTML = summary;
+
+}
+
+
+async function decrypt() {
+    const fileType = document.getElementById("fileType").value.trim() || "bin";
+    const file = document.getElementById('fileInput').files[0];
+    const password = document.getElementById('password').value;
+    const gridSize = parseInt(document.getElementById("gridSize").value);
+    const steps = parseInt(document.getElementById("steps").value);
+
+
+    if (!file || !password) {
+        alert("Please select a file and enter a password.");
+        return;
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const inputBytes = new Uint8Array(arrayBuffer);
+
+    const keystream = await generateKeystream(password, gridSize, steps, inputBytes.length);
+
+    const decrypted = new Uint8Array(inputBytes.length);
+    for (let i = 0; i < inputBytes.length; i++) {
+        decrypted[i] = inputBytes[i] ^ keystream[i];
+    }
+
+    downloadFile(decrypted, `decrypted.${fileType}`);
+
+}
+
+
+function downloadFile(byteArray, filename) {
+    const blob = new Blob([byteArray]);
+    const url = URL.createObjectURL(blob);
+
+    const link = document.getElementById("downloadLink");
+    link.href = url;
+    link.download = filename;
+    link.textContent = "Download " + filename;
+    link.style.display = "inline";
+}
+
+
+
