@@ -1,21 +1,49 @@
-<body>
-  <h2>Cellular Automaton File Encryption</h2>
-  <input type="file" id="fileInput"><br><br>
-  <label for="fileType">File Type (e.g., txt, mp4, png):</label>
-  <input type="text" id="fileType" placeholder=".txt"><br><br>
+<!DOCTYPE html>
+<html lang = "en">
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <label for="password">Enter your password:</label>
-  <input type="password" id="password" placeholder="Password"><br><br>
+    <head>
+        <title>Encryptor</title>
+    </head>
 
-  <label>Grid Size: <input type="number" id="gridSize" value="16" min="4" max="128"></label><br><br>
-  <label>Steps: <input type="number" id="steps" value="5" min="1" max="100"></label><br><br>
+    <body>
+    <div id="titlebar">
+        <h2>Cellular Automaton File Encryption</h2>
+    </div>
+    
+    <div id="fileEntry">
+        <input type="file" id="fileInput">
+    </div>
+    <br>
 
-  <button onclick="encrypt()">Encrypt</button>
-  <button onclick="decrypt()">Decrypt</button>
-  <br><br>
-  <a id="downloadLink" style="display:none">Download Result</a>
-  <p id="keySummary" style="margin-top: 1em;"></p>
+    <div id="fileDetails">
+        <label for="fileType">File Type (txt, mp4, png, jpg, etc.):</label>
+        <input type="text" id="fileType" placeholder="txt"><br><br>
+
+        <label for="password">Enter your password:</label>
+        <input type="password" id="password" placeholder="Password"><br><br>
+
+        <label>Grid Size (Max 350): <input type="number" id="gridSize" value="100" min="25" max="350"></label><br><br>
+        <label>Steps (Max 500): <input type="number" id="steps" value="150" min="10" max="500"></label><br><br>
+
+    </div>
+    
+    <div id="submissionButtons">
+        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="decrypt()">Decrypt</button>
+    </div>
+    
+    <br><br>
+
+    <div id="summaryBox">
+        <a id="downloadLink" style="display:none">Download Result</a>
+        <p id="keySummary" style="margin-top: 1em;"></p>
+    </div>
+    
 
 
-  <script src="base.js"></script>
-</body>
+    <script src="base.js"></script>
+    </body>
+</html>

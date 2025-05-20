@@ -6,6 +6,19 @@ async function hashToHex(password) {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+async function expandKeyBits(password, totalBitsNeeded) {
+  let bits = [];
+  let counter = 0;
+
+  while (bits.length < totalBitsNeeded) {
+    const toHash = password + counter.toString();
+    const partBits = await PassToBits(toHash);
+    bits = bits.concat(partBits);
+    counter++;
+  }
+
+  return bits.slice(0, totalBitsNeeded);
+}
 
 async function PassToBits(password) {
     const encoder = new TextEncoder();          // Converts string to byte array
@@ -165,7 +178,8 @@ function changeState(upLeft,upMid,upRight,left,current,right,botLeft,botMid,botR
 }
 
 async function generateKeystream(password, gridSize, steps, byteLength) {
-    const bits = await PassToBits(password);
+    const totalBitsNeeded = gridSize * gridSize;
+    const bits = await expandKeyBits(password, totalBitsNeeded);
     let cells = initializeGrid(gridSize, bits);
 
     let allBits = [];
@@ -195,7 +209,6 @@ async function generateKeystream(password, gridSize, steps, byteLength) {
 
 
 async function encrypt() {
-    const fileType = document.getElementById("fileType").value.trim() || "bin";
     const gridSize = parseInt(document.getElementById("gridSize").value);
     const steps = parseInt(document.getElementById("steps").value);
     const file = document.getElementById('fileInput').files[0];
@@ -216,7 +229,7 @@ async function encrypt() {
         encrypted[i] = inputBytes[i] ^ keystream[i];
     }
 
-    downloadFile(encrypted, `encrypted.${fileType}`);
+    downloadFile(encrypted, "encrypted.bin");
 
     //summary for key
     const summary = `Key Summary:<br>
