@@ -229,13 +229,13 @@ async function encrypt() {
         encrypted[i] = inputBytes[i] ^ keystream[i];
     }
 
-    downloadFile(encrypted, "encrypted.bin");
+
+    downloadFile(encrypted, "encrypted.bin"); 
+    let gap = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    let gapb = "&nbsp;&nbsp;";
 
     //summary for key
-    const summary = `Key Summary:<br>
-        Password = ${password}<br>
-        Grid Size = ${gridSize}<br>
-        Steps = ${steps}`;
+    const summary = ` <h1>${gap} Key Summary:${gapb}Password = ${password}  ${gap} Grid Size = ${gridSize}  ${gap} Steps = ${steps}</h1>`;
     
     document.getElementById("keySummary").innerHTML = summary;
 
