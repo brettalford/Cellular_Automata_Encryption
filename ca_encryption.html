@@ -10,48 +10,53 @@
     </head>
 
     <body>
-    <div id="titlebar">
-        <h2>Cellular Automaton File Encryption</h2>
-    </div>
+    <div id="innerBox">
+        <div id="titlebar">
+            <!-- <h2>Cellular Automaton File Encryption</h2> -->
+            <br>
+        </div>
 
-    
+        
 
-    <div id="fileEntry">
-        <div id="innerBox">
-            <input type="file" id="fileInput">
+        <div id="fileEntry">
+            
+                <input type="file" id="fileInput">
+            
+            
+        </div>
+
+
+
+        <div id="fileDetails">
+            <label for="fileType">File Type (txt, mp4, png, jpg, etc.):<input type="text" id="fileType" placeholder="txt"></label>
+            
+
+            <label for="password">Enter your password:<input type="password" id="password" placeholder="Password"></label>
+
+            <label>Grid Size (Max 350): <input type="number" id="gridSize" value="100" min="25" max="350"></label><br><br>
+            <label>Steps (Max 500): <input type="number" id="steps" value="150" min="10" max="500"></label><br><br>
+
         </div>
         
-    </div>
 
-
-
-    <div id="fileDetails">
-        <label for="fileType">File Type (txt, mp4, png, jpg, etc.):<input type="text" id="fileType" placeholder="txt"></label>
+        <div id="submissionButtons">
+            <button class="buttons" onclick="encrypt()">Encrypt</button>
+            <button class="buttons" onclick="decrypt()">Decrypt</button>
+        </div>
         
 
-        <label for="password">Enter your password:<input type="password" id="password" placeholder="Password"></label>
-
-        <label>Grid Size (Max 350): <input type="number" id="gridSize" value="100" min="25" max="350"></label><br><br>
-        <label>Steps (Max 500): <input type="number" id="steps" value="150" min="10" max="500"></label><br><br>
-
-    </div>
-    
-
-    <div id="submissionButtons">
-        <button class="buttons" onclick="encrypt()">Encrypt</button>
-        <button class="buttons" onclick="decrypt()">Decrypt</button>
-    </div>
-    
 
 
+        <div id="summaryBox">
+            <p id="keySummary" style="margin-top: 1em;">Key Details</p>
+        </div>
 
-    <div id="summaryBox">
-        <a id="downloadLink" >Download Result</a>
-        <p id="keySummary" style="margin-top: 1em;"></p>
-    </div>
-    
+        <div id="downloadBox">
+            <a id="downloadLink" >Download Link Will Show Here</a>
+        </div>
+        
 
-
+        </div>
 
     <script src="base.js"></script>
     </body>

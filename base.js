@@ -279,6 +279,8 @@ function downloadFile(byteArray, filename) {
     link.download = filename;
     link.textContent = "Download " + filename;
     link.style.display = "inline";
+
+    
 }
 
 

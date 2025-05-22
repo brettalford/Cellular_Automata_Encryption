@@ -13,7 +13,7 @@ background-color: #20273b;
 }
 
 
-
+/*
 #titlebar{
 
     height: 5rem;
@@ -28,8 +28,9 @@ background-color: #20273b;
     
 }
 h2{
-   font-size: 2.8rem; 
+   font-size: 308%; 
 }
+   */
 
 
 
@@ -40,25 +41,20 @@ h2{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255,.2);
+    background-color: rgba(255, 255, 255,.4);
     max-width: 94%;
     margin: 0 auto;
     padding: 0;
-    border-radius: 15px;
-    margin-bottom: 1rem;
+    border: 1px solid rgba(40,40,40,1);
     
 }
 #innerBox{
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100vh;
+    display: block;
     background-color: rgba(255, 255, 255,.1);
-    width: 98%;
+    width: 94vw;
     margin: 0 auto;
-    border-radius: 15px;
-    border: 1px solid rgba(40,40,40,.5);
-    color: rgb(226, 226, 226);
+    border: 1px solid rgba(40,40,40,1);
     
 }
 
@@ -72,17 +68,14 @@ h2{
     justify-content: space-evenly;
     gap: 1rem;
     height: 5rem;
-    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255,.3);    
+    background-color: rgba(255, 255, 255,.4);    
     max-width: 94%;
     margin: 0 auto; 
-    margin-bottom: 1rem;
-    color: rgb(226, 226, 226);
-
-    
+    border: 1px solid rgba(40,40,40,1);
+    font-size:115%;
 }
 
 
@@ -91,16 +84,14 @@ h2{
 
 #submissionButtons{
     height: 5rem;
-    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255,.3);
+    background-color: rgba(255, 255, 255,.4);
     justify-content: space-evenly;
-    
+    border: 1px solid rgba(40,40,40,1);
     max-width: 94%;
     margin: 0 auto; 
-    margin-bottom: 1rem;
 }
 .buttons{
     width: 10%;
@@ -118,19 +109,17 @@ h2{
 
 #summaryBox{
     height: 5rem;
-    border-radius: 15px;
     justify-content: space-evenly;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255,.3);    
+    background-color: rgba(255, 255, 255,.4);    
     max-width: 94%;
     margin: 0 auto; 
-    margin-bottom: 1rem;
-    color: rgb(226, 226, 226);
-    font-size: 80%;
+    font-size: 75%;
+    border: 1px solid rgba(40,40,40,1);
 }
 #downloadLink{
-    font-size: 140%;
-    color: aliceblue;
+    font-size: 190%;
+    color: black;
 }
