@@ -214,11 +214,14 @@ async function encrypt() {
     const file = document.getElementById('fileInput').files[0];
     const password = document.getElementById('password').value;
 
+
     if (!file || !password) {
         alert("Please select a file and enter a password.");
         return;
     }
 
+    let fileName=file.name
+    fileName=fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
     const arrayBuffer = await file.arrayBuffer();
     const inputBytes = new Uint8Array(arrayBuffer);
 
@@ -230,12 +233,12 @@ async function encrypt() {
     }
 
 
-    downloadFile(encrypted, "encrypted.bin"); 
+    downloadFile(encrypted, `${fileName}_encrypted.bin`); 
     let gap = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     let gapb = "&nbsp;&nbsp;";
 
     //summary for key
-    const summary = ` <h1>${gap} Key Summary:${gapb}Password = ${password}  ${gap} Grid Size = ${gridSize}  ${gap} Steps = ${steps}</h1>`;
+    const summary = ` <p>${gap} ${gapb}Password = ${password}  ${gap} Grid Size = ${gridSize}  ${gap} Steps = ${steps}</p>`;
     
     document.getElementById("keySummary").innerHTML = summary;
 
@@ -255,6 +258,8 @@ async function decrypt() {
         return;
     }
 
+    let fileName=file.name
+    fileName=fileName.substring(0, fileName.lastIndexOf('.')) || fileName;
     const arrayBuffer = await file.arrayBuffer();
     const inputBytes = new Uint8Array(arrayBuffer);
 
@@ -265,7 +270,7 @@ async function decrypt() {
         decrypted[i] = inputBytes[i] ^ keystream[i];
     }
 
-    downloadFile(decrypted, `decrypted.${fileType}`);
+    downloadFile(decrypted, `${fileName}_decrypted.${fileType}`);
 
 }
 
