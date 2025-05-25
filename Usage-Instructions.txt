@@ -1,0 +1,6 @@
+Step 1: For simple running please go to this link: https://brettalford.github.io/Cellular_Automata_Encryption/
+Step 2: Select the file You want to encrypt/decrypt
+Step 3: Include the file type (optional for encryption, required for most proper decryption as items such as mp4 files will not work properly otherwise)
+Step 4: Select your password.
+Step 5: Choose your grid size and step count within the maximum ranges.
+Step 6: Press encrypt or decrypt.
