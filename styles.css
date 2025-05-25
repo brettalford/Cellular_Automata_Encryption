@@ -172,7 +172,9 @@ hr{
 
 @media screen and (max-width: 650px ) {
 
-    
+    #titlebar{
+        height: 15rem;
+    }
 
   #titlebar h2 {
     font-size: 4.5vw;
@@ -232,7 +234,7 @@ hr{
   }
 
   #fileEntry {
-    height: 10vh;
+    height: 8vh;
   }
 
 }
