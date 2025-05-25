@@ -170,7 +170,7 @@ hr{
 
 
 
-@media screen and (max-width: 620px ) {
+@media screen and (max-width: 650px ) {
 
     
 
@@ -200,15 +200,10 @@ hr{
   }
 
   #fileDetails input {
-    width: 78vw;
+    width: 80vw;
     font-size: 1em;
   }
 
-  #fileEntry{
-    padding: 0;
-    width: 81vw;
-    align-self: center;
-  }
 
   #submissionButtons {
     flex-direction: column;
@@ -237,8 +232,7 @@ hr{
   }
 
   #fileEntry {
-    height: auto;
-    padding: 1rem;
+    height: 10vh;
   }
 
 }
