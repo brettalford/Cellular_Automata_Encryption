@@ -172,8 +172,10 @@ hr{
 
 @media screen and (max-width: 650px ) {
 
-    #titlebar{
-        height: 15rem;
+    
+    hr{
+        width: 65vw;
+        height: 1%;
     }
 
   #titlebar h2 {
@@ -183,7 +185,7 @@ hr{
   #titlebar p{
     margin-left: 5%;
     margin-right: 5%;
-    font-size: 2.3vw;
+    font-size: 2.5vw;
   }
 
     #titlebar h3 {
